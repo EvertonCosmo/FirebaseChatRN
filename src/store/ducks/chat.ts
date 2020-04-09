@@ -4,6 +4,7 @@ export const Types = {
   CHAT_MESSAGE_SEND: 'chat/CHAT_MESSAGE_SEND',
   CHAT_MESSAGE_SEND_SUCCESS: 'chat/CHAT_MESSAGE_SEND_SUCCESS',
   CHAT_MESSAGE_SEND_ERROR: 'chat/CHAT_MESSAGE_SEND_ERROR',
+  CHAT_MESSAGE_LOADING: 'chat/CHAT_MESSAGE_LOADING',
 };
 
 export interface Message {
@@ -15,14 +16,14 @@ interface ChatState {
   messages: Message[];
   message?: Message;
   sending: boolean;
-  error_sending?: string;
+  error_sending?: string | null;
 }
 
 const INITIAL_STATE: ChatState = {
   messages: [],
   message: null,
   sending: false,
-  error_sending: '',
+  error_sending: null,
 };
 const chat = (
   state = INITIAL_STATE,
@@ -32,7 +33,9 @@ const chat = (
     case Types.CHAT_MESSAGE_SEND_SUCCESS:
       return {...state, sending: false, message: null};
     case Types.CHAT_MESSAGE_SEND_ERROR:
-      return {...state, sending: false, error_sending: payload.error};
+      return {...state, sending: false, error_sending: payload};
+    case Types.CHAT_MESSAGE_LOADING:
+      return {...state, sending: true};
     default:
       return state;
   }

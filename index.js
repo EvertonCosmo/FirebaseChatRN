@@ -1,6 +1,7 @@
 /**
  * @format
  */
+import './src/config/ReactotronConfig';
 require('react-native').unstable_enableLogBox();
 import 'react-native-gesture-handler';
 import {AppRegistry} from 'react-native';

@@ -11,10 +11,12 @@ export const Types = {
 interface SessionState {
   user: FirebaseAuthTypes.User | null;
   loading: boolean;
+  isAuthenticated: boolean;
   error?: string | null;
 }
 const INITIAL_STATE: SessionState = {
   user: null,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
@@ -25,7 +27,7 @@ const session = (state = INITIAL_STATE, {type, payload}: BaseAction) => {
       return {...state, loading: true};
     case Types.SESSION_SUCCESS:
       console.log('Session init');
-      return {...state, user: payload, loading: false};
+      return {...state, user: payload, loading: false, isAuthenticated: true};
     case Types.SESSION_LOGOUT:
       return INITIAL_STATE;
     default:

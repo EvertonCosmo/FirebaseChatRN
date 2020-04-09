@@ -1,6 +1,7 @@
 import React, {Fragment, useRef} from 'react';
 import {Formik} from 'formik';
 import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 import {BasicFormProps} from 'types';
 import {
   Container,
@@ -8,6 +9,8 @@ import {
   TextButton,
   TextError,
   FormContainer,
+  TextButtonSignUp,
+  ButtonCustomSignUp,
 } from './styles';
 import {TextInputCustom} from './styles';
 import {
@@ -17,6 +20,8 @@ import {
 
 const BasicForm = ({buttonTitle, action}: BasicFormProps) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const secondTextInput = useRef(null);
   return (
     <Container>
@@ -57,7 +62,7 @@ const BasicForm = ({buttonTitle, action}: BasicFormProps) => {
                   }}
                   blurOnSubmit={false}
                   value={values.email}
-                  underlineColorAndroid={'transparent'}
+                  underlineColorAndroid={'#35aaff'}
                 />
 
                 {touched.password && errors.password && (
@@ -72,7 +77,7 @@ const BasicForm = ({buttonTitle, action}: BasicFormProps) => {
                   returnKeyType={'done'}
                   ref={secondTextInput}
                   value={values.password}
-                  underlineColorAndroid={'transparent'}
+                  underlineColorAndroid={'#35aaff'}
                 />
                 {buttonTitle === 'SignUp' && (
                   <Fragment>
@@ -87,13 +92,19 @@ const BasicForm = ({buttonTitle, action}: BasicFormProps) => {
                       secureTextEntry={true}
                       autoCapitalize={'none'}
                       returnKeyType={'done'}
-                      underlineColorAndroid={'transparent'}
+                      underlineColorAndroid={'#35aaff'}
                     />
                   </Fragment>
                 )}
                 <ButtonCustom onPress={handleSubmit} disabled={!isValid}>
                   <TextButton>{buttonTitle}</TextButton>
                 </ButtonCustom>
+                {buttonTitle === 'Login' && (
+                  <ButtonCustomSignUp
+                    onPress={() => navigation.navigate('signup')}>
+                    <TextButtonSignUp>Register</TextButtonSignUp>
+                  </ButtonCustomSignUp>
+                )}
               </FormContainer>
             </Fragment>
           );
@@ -102,4 +113,5 @@ const BasicForm = ({buttonTitle, action}: BasicFormProps) => {
     </Container>
   );
 };
+
 export default React.memo(BasicForm);
