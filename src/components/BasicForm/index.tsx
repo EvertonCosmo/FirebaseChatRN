@@ -17,6 +17,7 @@ import {
   form_validation_signUp,
   form_validation_login,
 } from '../../helpers/validation_form';
+import LoadingIndicator from '../LoadingIndicator';
 
 const BasicForm = ({buttonTitle, action}: BasicFormProps) => {
   const dispatch = useDispatch();

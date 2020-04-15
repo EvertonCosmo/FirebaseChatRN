@@ -3,10 +3,13 @@ import {BaseAction, AuthType} from 'types';
 export const Types = {
   SESSION_LOADING: 'session/SESSION_LOADING',
   SESSION_LOGOUT: 'session/SESSION_LOGOUT',
+  SESSION_LOGOUT_SUCCESS: 'session/SESSION_LOGOUT_SUCCESS',
+  SESSION_LOGOUT_ERROR: 'session/SESSION_LOGOUT_ERROR',
   SESSION_REQUEST: 'session/SESSION_REQUEST',
   SESSION_SUCCESS: 'session/SESSION_SUCCESS',
   SESSION_ERROR: 'session/SESSION_ERROR',
   SESSION_SIGNUP: 'session/SESSION_SIGNUP',
+  SESSION_AUTH_CHANGE: 'session/SESSION_AUTH_CHANGE',
 };
 interface SessionState {
   user: FirebaseAuthTypes.User | null;
@@ -18,7 +21,7 @@ const INITIAL_STATE: SessionState = {
   user: null,
   isAuthenticated: false,
   loading: false,
-  error: null,
+  error: '',
 };
 
 const session = (state = INITIAL_STATE, {type, payload}: BaseAction) => {
@@ -26,9 +29,21 @@ const session = (state = INITIAL_STATE, {type, payload}: BaseAction) => {
     case Types.SESSION_LOADING:
       return {...state, loading: true};
     case Types.SESSION_SUCCESS:
-      console.log('Session init');
-      return {...state, user: payload, loading: false, isAuthenticated: true};
-    case Types.SESSION_LOGOUT:
+      return {
+        ...state,
+        user: payload,
+        loading: false,
+        isAuthenticated: true,
+        error: '',
+      };
+    case Types.SESSION_ERROR:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        error: payload,
+      };
+    case Types.SESSION_LOGOUT_SUCCESS:
       return INITIAL_STATE;
     default:
       return state;
@@ -45,6 +60,10 @@ export const Creators = {
   }),
   logout: (): BaseAction => ({
     type: Types.SESSION_LOGOUT,
+  }),
+
+  AuthStateChange: (): BaseAction => ({
+    type: Types.SESSION_AUTH_CHANGE,
   }),
 };
 export default session;
