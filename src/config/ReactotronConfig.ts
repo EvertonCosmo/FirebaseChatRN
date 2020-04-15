@@ -12,8 +12,8 @@ interface PluginConfig {
   except?: string[];
 }
 if (process.env.NODE_ENV === 'development') {
-  // const tron = Reactotron.setAsyncStorageHandler(AsyncStorage)
-  const tron = Reactotron.configure()
+  const tron = Reactotron.setAsyncStorageHandler(AsyncStorage)
+    .configure()
     .useReactNative({
       networking: {
         // optionally, you can turn it off with false.
