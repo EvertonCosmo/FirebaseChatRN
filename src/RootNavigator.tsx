@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {createStackNavigator, TransitionSpecs} from '@react-navigation/stack';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
@@ -14,9 +14,6 @@ export const StackNavigatorAuth = () => {
   const {isAuthenticated, loading} = useSelector(
     (state: RootReducerType) => state.session,
   );
-  useEffect(() => {
-    // dispatch(sessionCreators.AuthStateChange());
-  }, []);
   return (
     <Fragment>
       <Stack.Navigator
